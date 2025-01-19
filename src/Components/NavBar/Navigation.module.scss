@@ -1,0 +1,15 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  font-weight: 700;
+}
+.active {
+  color: #fe5f1e;
+}
+.sort {
+  position: relative;
+}
+.nav__list {
+  display: flex;
+}

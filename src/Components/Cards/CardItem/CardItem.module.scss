@@ -1,0 +1,88 @@
+.card__item {
+  width: 280px;
+  height: 460px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  b {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  img {
+    width: 260px;
+    height: 260px;
+  }
+  .card__block {
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 700;
+    color: #2c2c2c;
+    font-size: 14px;
+  }
+  .card__type {
+    display: flex;
+    justify-content: center;
+
+    li {
+      width: 100%;
+      padding: 4px 10px;
+      &:hover {
+        background-color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+    li:last-child {
+      margin-left: 5px;
+    }
+  }
+  .card__size {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 5px;
+
+    li {
+      width: 100%;
+
+      &:hover {
+        background-color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    }
+  }
+  .card__price {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 0 10px;
+    span {
+      font-size: 25px;
+    }
+    button {
+      border: 1px solid #eb5a1e;
+      height: 40px;
+      line-height: 0px;
+      background: none;
+      padding: 10px 30px;
+      border-radius: 30px;
+      color: #eb5a1e;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        color: #fff;
+        background-color: #eb5a1e;
+      }
+    }
+  }
+}
+.active {
+  background-color: #fff;
+  border-radius: 4px;
+}
