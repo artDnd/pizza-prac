@@ -15,7 +15,7 @@ export const usePizzas = create(
       } catch (error) {
         set({ error: error.message });
       } finally {
-        set({ isLoading: false });
+        setTimeout(() => set({ isLoading: false }), 1000);
       }
     },
   }))

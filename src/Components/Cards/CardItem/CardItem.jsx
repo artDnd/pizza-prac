@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./CardItem.module.scss";
 import { useState } from "react";
 const CardItem = (props) => {
-  const { id, title, imageUrl, types, sizes, price, category, rating } = props;
+  const { title, imageUrl, types, sizes, price } = props;
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
 
@@ -28,8 +28,8 @@ const CardItem = (props) => {
           {sizes.map((size, i) => (
             <li
               className={activeSize == i ? styles.active : ""}
-              key={i}
               onClick={() => setActiveSize(i)}
+              key={i}
             >
               {size} см.
             </li>

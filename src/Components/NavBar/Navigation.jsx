@@ -5,9 +5,12 @@ import SortPopUp from "./SortPopUp/SortPopUp";
 
 const Navigation = () => {
   const [selectCategory, setSelectCategory] = useState(0);
-  const handleCategory = (id) => {
-    setSelectCategory(id);
-  };
+  const [sortIsOpenned, setSortIsOpenned] = useState(false);
+  const [selectSortCategory, setSelectSortCategory] = useState(0);
+
+  const handleSortOpenned = () => setSortIsOpenned(!sortIsOpenned);
+  const handleCategory = (id) => setSelectCategory(id);
+  const sortCategory = ["популярности", "по цене", "по алфавиту"];
   const categoryName = [
     "Все",
     "Мясные",
@@ -16,6 +19,10 @@ const Navigation = () => {
     "Острые",
     "Закрытые",
   ];
+  const handleSortCategory = (index) => {
+    setSelectSortCategory(index);
+    handleSortOpenned();
+  };
 
   const renderCategorys = categoryName.map((value, index) => (
     <NavigationItem
@@ -26,15 +33,27 @@ const Navigation = () => {
       handleCategory={handleCategory}
     />
   ));
+
   return (
     <div className={styles.nav}>
       <ul className={styles.nav__list}>{renderCategorys}</ul>
       <div>
         <span>
-          Сортировка по: <b className={styles.active}>популярности</b>
+          Сортировка по:{" "}
+          <b className={styles.active} onClick={handleSortOpenned}>
+            {sortCategory[selectSortCategory]}
+          </b>
         </span>
         <div className={styles.sort}>
-          <SortPopUp />
+          {sortIsOpenned && (
+            <SortPopUp
+              setSelectSortCategory={setSelectSortCategory}
+              selectSortCategory={selectSortCategory}
+              handleSortOpenned={handleSortOpenned}
+              sortCategory={sortCategory}
+              handleSortCategory={handleSortCategory}
+            />
+          )}
         </div>
       </div>
     </div>
