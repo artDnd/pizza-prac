@@ -1,14 +1,19 @@
 import styles from "./Cards.module.scss";
 import CardItem from "./CardItem/CardItem";
-import { usePizzas } from "../../Store/Store";
+import { useFilters, usePizzas } from "../../Store/Store";
 import Skeleton from "../Skeleton/Skeleton";
 
 const Card = () => {
   const pizzasItems = usePizzas((state) => state.pizzas);
   const isLoading = usePizzas((state) => state.isLoading);
+  const { category } = useFilters();
+  const skeletonElement = pizzasItems?.map((_, i) => <Skeleton key={i} />);
 
-  const skeletonElement = pizzasItems?.map((elem, i) => <Skeleton key={i} />);
-  const pizzaElement = pizzasItems?.map((pizza) => (
+  const filteredElement = pizzasItems.filter((item) => {
+    if (category === null) return true;
+    return category == item.category;
+  });
+  const pizzaElement = filteredElement?.map((pizza) => (
     <CardItem key={pizza.id} {...pizza} />
   ));
 

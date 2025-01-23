@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import "./App.css";
-import Card from "./Components/Cards/Cards";
 import Header from "./Components/Header/Header";
-import Navigation from "./Components/NavBar/Navigation";
 import { usePizzas } from "./Store/Store";
+import { Home } from "./Pages/Home";
+import { Route, Routes } from "react-router";
+import { Cart } from "./Pages/Cart";
 
 function App() {
   const fetchPizzas = usePizzas((state) => state.fetchPizzas);
@@ -11,11 +12,14 @@ function App() {
   useEffect(() => {
     fetchPizzas();
   }, []);
+
   return (
     <div className="container">
       <Header />
-      <Navigation />
-      <Card />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="cart" element={<Cart />} />
+      </Routes>
     </div>
   );
 }

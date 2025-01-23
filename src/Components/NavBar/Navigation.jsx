@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavigationItem } from "./NavBarItem/NavigationItem";
 import styles from "./Navigation.module.scss";
 import SortPopUp from "./SortPopUp/SortPopUp";
+import { useFilters } from "../../Store/Store";
 
 const Navigation = () => {
   const [selectCategory, setSelectCategory] = useState(0);
@@ -10,25 +11,20 @@ const Navigation = () => {
 
   const handleSortOpenned = () => setSortIsOpenned(!sortIsOpenned);
   const handleCategory = (id) => setSelectCategory(id);
-  const sortCategory = ["популярности", "по цене", "по алфавиту"];
-  const categoryName = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
-  ];
+  const sortCategory = useFilters((state) => state.filterSort);
+  const categoryName = useFilters((state) => state.filterCategory);
+
   const handleSortCategory = (index) => {
     setSelectSortCategory(index);
     handleSortOpenned();
   };
 
-  const renderCategorys = categoryName.map((value, index) => (
+  const renderCategorys = categoryName.map((name, index) => (
     <NavigationItem
-      key={value}
+      key={name}
       id={index}
-      title={value}
+      title={name}
+      nameId={index}
       selectCategory={selectCategory}
       handleCategory={handleCategory}
     />

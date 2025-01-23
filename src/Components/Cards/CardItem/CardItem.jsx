@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
 import styles from "./CardItem.module.scss";
 import { useState } from "react";
+import { usePizzas } from "../../../Store/Store";
 const CardItem = (props) => {
-  const { title, imageUrl, types, sizes, price } = props;
+  const { title, imageUrl, types, sizes, price, id } = props;
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
+
+  const addPizzasInCart = usePizzas((state) => state.addPizzasInCart);
 
   const typePizza = ["тонкое", "традиционное"];
 
@@ -40,7 +43,7 @@ const CardItem = (props) => {
         <b>
           от <span>{price} Р</span>
         </b>
-        <button>+ Добавить</button>
+        <button onClick={() => addPizzasInCart(id)}>+ Добавить</button>
       </div>
     </div>
   );
