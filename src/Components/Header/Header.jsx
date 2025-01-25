@@ -1,9 +1,11 @@
 import { Link } from "react-router";
 import styles from "./header.module.scss";
 import { usePizzas } from "../../Store/Store";
+import { getTotalPrice } from "../../utils/getTotalPrice";
 const Header = () => {
   const cartPizzas = usePizzas((state) => state.cartPizzas);
-  const totalPrice = usePizzas((state) => state.totalPrice);
+  const pizzas = usePizzas((state) => state.pizzas);
+  const price = getTotalPrice(pizzas, cartPizzas);
 
   return (
     <header className={styles.header}>
@@ -15,7 +17,7 @@ const Header = () => {
         </div>
       </Link>
       <Link to={"/cart"} className={styles.header__cart}>
-        <b className={styles.header__price}>{totalPrice} руб.</b>
+        <b className={styles.header__price}>{price} руб.</b>
         <b>Корзина: {cartPizzas.length}</b>
       </Link>
     </header>

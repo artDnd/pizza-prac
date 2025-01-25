@@ -2,10 +2,18 @@ import styles from "./Cart.module.scss";
 import { CartItem } from "../Components/Cart/CartItem";
 import { usePizzas } from "../Store/Store";
 export const Cart = () => {
-  const totalPrice = usePizzas((state) => state.totalPrice);
   const cartPizzas = usePizzas((state) => state.cartPizzas);
-  const cartPizzasElement = cartPizzas.map((pizza) => (
-    <CartItem key={pizza.id} {...pizza} />
+  const pizzas = usePizzas((state) => state.pizzas);
+  const cartElementId = cartPizzas
+    .map((obj) => {
+      const pizza = pizzas.find((pizza) => pizza.id == obj.pizzaId);
+      if (pizza) return { pizza, obj };
+      return null;
+    })
+    .filter(Boolean);
+
+  const cartPizzasElement = cartElementId.map(({ pizza, obj }) => (
+    <CartItem key={pizza.id} {...pizza} {...obj} />
   ));
 
   return (
@@ -21,7 +29,7 @@ export const Cart = () => {
         <p>
           Всего пицц: <b>{cartPizzas.length}</b>
         </p>
-        <p>Сумма заказа: {totalPrice}</p>
+        <p>Сумма заказа: {}</p>
       </div>
     </div>
   );
