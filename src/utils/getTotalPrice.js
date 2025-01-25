@@ -13,7 +13,8 @@ export const getTotalPrice = (pizzas, cartPizzas) => {
       (type) => type.type == cartItem.cartItem.type
     );
     const pricePizza = cartItem.pizza.price * cartItem.cartItem.count;
-    const sizeAndTypePrice = sizePrice.price + typePrice.price;
+    const sizeAndTypePrice =
+      (sizePrice.price + typePrice.price) * cartItem.cartItem.count;
     return acc + pricePizza + sizeAndTypePrice;
   }, 0);
   return price;
