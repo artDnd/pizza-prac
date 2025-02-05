@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
 import styles from "./CardItem.module.scss";
 import { useState } from "react";
 import { usePizzas } from "../../../Store/Store";
+import { Pizza } from "../../../types";
 
-const CardItem = (props) => {
+const CardItem = (props: Pizza) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const typePizza = ["тонкое", "традиционное"];
@@ -14,7 +14,7 @@ const CardItem = (props) => {
     <div className={styles.card__item}>
       <img src={props.imageUrl} alt="pizza" />
       <b>{props.title}</b>
-      <div className={styles.card__block}>
+      <div className={styles.cards__block}>
         <ul className={styles.card__type}>
           {props.types.map((typeId, i) => (
             <li
@@ -43,30 +43,19 @@ const CardItem = (props) => {
           от <span>{props.price} Р</span>
         </b>
         <button
-          onClick={() =>
+          onClick={() => {
             addPizzasInCart(
               props.id,
               props.types[activeType].type,
               props.sizes[activeSize].size
-            )
-          }
+            );
+          }}
         >
           + Добавить
         </button>
       </div>
     </div>
   );
-};
-
-CardItem.propTypes = {
-  sizes: PropTypes.array,
-  imageUrl: PropTypes.string,
-  title: PropTypes.string,
-  types: PropTypes.array,
-  price: PropTypes.number,
-  category: PropTypes.number,
-  rating: PropTypes.number,
-  id: PropTypes.number,
 };
 
 export default CardItem;

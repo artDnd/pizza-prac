@@ -1,14 +1,19 @@
 import { usePizzas } from "../../Store/Store";
+import { Pizza } from "../../types";
 import styles from "./CartItem.module.scss";
-export const CartItem = (props) => {
+interface CartItemProps extends Pizza {
+  type: number;
+  size: number;
+}
+export const CartItem = (props: CartItemProps) => {
   const { deletePizzasInCart, addCountPizzasInCart, deleteCountPizzasInCart } =
     usePizzas();
   const needType = props.types.find((obj) => obj.type == props.type);
   const sizePrice = props.sizes.find((size) => size.size == props.size);
   const typePrice = props.types.find((type) => type.type == props.type);
-  const totalPrice =
-    (sizePrice.price + typePrice.price + props.price) * props.count;
-  console.log(props);
+  const sPrice = sizePrice?.price || 0;
+  const tPrice = typePrice?.price || 0;
+  const totalPrice = (sPrice + tPrice + props.price) * (props.count || 0);
   return (
     <div className={styles.card}>
       <div className={styles.card__title}>
@@ -16,7 +21,7 @@ export const CartItem = (props) => {
         <div>
           <b>{props.title}</b>
           <span>
-            {needType.name}, {props.size} см.
+            {needType?.name}, {props.size} см.
           </span>
         </div>
       </div>

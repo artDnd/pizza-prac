@@ -1,13 +1,14 @@
 import { nanoid } from "nanoid";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+import { FilterState, PizzaInCart, PizzaState } from "../types";
 
-export const usePizzas = create(
+export const usePizzas = create<PizzaState>()(
   devtools((set, get) => ({
     pizzas: [],
     cartPizzas: [],
     error: null,
-    isLoading: null,
+    isLoading: true,
 
     fetchPizzas: async () => {
       try {
@@ -15,16 +16,18 @@ export const usePizzas = create(
         const res = await fetch("./db.json");
         if (!res.ok) throw new Error("Failed to fetch! Try again.");
         set({ pizzas: await res.json(), error: null });
-      } catch (error) {
-        set({ error: error.message });
+      } catch (error: unknown) {
+        set({ error: (error as { message: string }).message });
       } finally {
         setTimeout(() => set({ isLoading: false }), 1000);
       }
     },
 
     addPizzasInCart: (pizzaId, type, size) => {
+      console.log(pizzaId, type, size);
+
       const existingPizza = get().cartPizzas.find(
-        (pizza) =>
+        (pizza: PizzaInCart) =>
           pizza.pizzaId == pizzaId && pizza.type == type && pizza.size == size
       );
       if (!existingPizza) {
@@ -36,7 +39,7 @@ export const usePizzas = create(
         });
         return;
       }
-      const changedPizza = get().cartPizzas.map((pizza) => {
+      const changedPizza = get().cartPizzas.map((pizza: PizzaInCart) => {
         if (
           pizza.pizzaId == pizzaId &&
           pizza.type == type &&
@@ -48,7 +51,7 @@ export const usePizzas = create(
       });
       set({ cartPizzas: changedPizza });
     },
-    addCountPizzasInCart: (id) => {
+    addCountPizzasInCart: (id: string) => {
       const changedPizza = get().cartPizzas.map((pizza) => {
         if (pizza.id == id) {
           return { ...pizza, count: pizza.count + 1 };
@@ -57,16 +60,17 @@ export const usePizzas = create(
       });
       set({ cartPizzas: changedPizza });
     },
-    deleteCountPizzasInCart: (id) => {
+    deleteCountPizzasInCart: (id: string) => {
       const changedPizza = get().cartPizzas.map((pizza) => {
-        if (pizza.id == id) {
+        if (pizza.id == id && pizza.count > 1) {
           return { ...pizza, count: pizza.count - 1 };
         }
+        if (pizza.id == id && pizza.count == 1) return pizza;
         return pizza;
       });
       set({ cartPizzas: changedPizza });
     },
-    deletePizzasInCart: (pizzaId) => {
+    deletePizzasInCart: (pizzaId: string) => {
       const deletedPizza = get().cartPizzas.filter(
         (pizza) => pizza.id != pizzaId
       );
@@ -74,7 +78,8 @@ export const usePizzas = create(
     },
   }))
 );
-export const useFilters = create(
+
+export const useFilters = create<FilterState>()(
   devtools((set) => ({
     category: null,
     filterCategory: [

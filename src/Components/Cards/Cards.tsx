@@ -3,7 +3,7 @@ import CardItem from "./CardItem/CardItem";
 import { useFilters, usePizzas } from "../../Store/Store";
 import Skeleton from "../Skeleton/Skeleton";
 
-const Card = () => {
+const Cards = () => {
   const pizzasItems = usePizzas((state) => state.pizzas);
   const isLoading = usePizzas((state) => state.isLoading);
   const { category } = useFilters();
@@ -27,4 +27,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default Cards;

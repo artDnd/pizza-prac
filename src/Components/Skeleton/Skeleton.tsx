@@ -1,6 +1,5 @@
 import ContentLoader from "react-content-loader";
-
-const Skeleton = (props) => (
+const Skeleton = (props: any) => (
   <ContentLoader
     speed={2}
     width={330}

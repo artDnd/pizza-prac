@@ -10,11 +10,11 @@ const Navigation = () => {
   const [selectSortCategory, setSelectSortCategory] = useState(0);
 
   const handleSortOpenned = () => setSortIsOpenned(!sortIsOpenned);
-  const handleCategory = (id) => setSelectCategory(id);
+  const handleCategory = (id: number) => setSelectCategory(id);
   const sortCategory = useFilters((state) => state.filterSort);
   const categoryName = useFilters((state) => state.filterCategory);
 
-  const handleSortCategory = (index) => {
+  const handleSortCategory = (index: number) => {
     setSelectSortCategory(index);
     handleSortOpenned();
   };
@@ -43,9 +43,7 @@ const Navigation = () => {
         <div className={styles.sort}>
           {sortIsOpenned && (
             <SortPopUp
-              setSelectSortCategory={setSelectSortCategory}
               selectSortCategory={selectSortCategory}
-              handleSortOpenned={handleSortOpenned}
               sortCategory={sortCategory}
               handleSortCategory={handleSortCategory}
             />

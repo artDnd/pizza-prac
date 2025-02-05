@@ -1,5 +1,6 @@
 import { useFilters } from "../../../Store/Store";
 import styles from "./NavigationItem.module.scss";
+
 export const NavigationItem = ({
   title,
   id,

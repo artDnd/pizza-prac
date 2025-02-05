@@ -1,11 +1,14 @@
 import styles from "./SortPopUp.module.scss";
-import PropTypes from "prop-types";
-
+interface SortPopUpProps {
+  handleSortCategory: (index: number) => void;
+  sortCategory: Array<string>;
+  selectSortCategory: number;
+}
 const SortPopUp = ({
   selectSortCategory,
   sortCategory,
   handleSortCategory,
-}) => {
+}: SortPopUpProps) => {
   return (
     <ul className={styles.sort}>
       {sortCategory.map((category, index) => (
@@ -20,9 +23,5 @@ const SortPopUp = ({
     </ul>
   );
 };
-SortPopUp.propTypes = {
-  selectSortCategory: PropTypes.number,
-  handleSortCategory: PropTypes.func,
-  sortCategory: PropTypes.array,
-};
+
 export default SortPopUp;
